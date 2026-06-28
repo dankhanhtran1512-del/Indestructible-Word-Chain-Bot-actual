@@ -1,4 +1,5 @@
 import json
+import logging
 import re
 
 from google import genai
@@ -16,16 +17,9 @@ class GeminiClient:
                 contents=prompt
             )
 
-            print("\n========== GEMINI RAW RESPONSE ==========")
-
-            if hasattr(response, "text"):
-                print(response.text)
-            else:
-                print(response)
-
-            print("=========================================\n")
-
             text = getattr(response, "text", "")
+
+            logging.warning("Gemini raw response: %s", text)
 
             if not text:
                 return {
@@ -36,10 +30,7 @@ class GeminiClient:
             return self.parse_json_response(text)
 
         except Exception as error:
-            print("\n========== GEMINI EXCEPTION ==========")
-            print(type(error).__name__)
-            print(error)
-            print("======================================\n")
+            logging.exception("Gemini exception")
 
             return {
                 "success": False,
@@ -49,22 +40,17 @@ class GeminiClient:
     def parse_json_response(self, text):
         try:
             text = text.strip()
-
             text = text.replace("```json", "")
             text = text.replace("```", "")
             text = text.strip()
 
             try:
                 result = json.loads(text)
-
             except json.JSONDecodeError:
                 match = re.search(r"\{.*\}", text, re.DOTALL)
 
                 if not match:
-                    print("\n========== PARSE FAILED ==========")
-                    print(text)
-                    print("=================================\n")
-
+                    logging.error("Gemini JSON parse failed. Raw response: %s", text)
                     return {
                         "success": False,
                         "error": "AI response could not be parsed."
@@ -82,12 +68,9 @@ class GeminiClient:
             }
 
         except Exception as error:
-            print("\n========== JSON ERROR ==========")
-            print(error)
-            print(text)
-            print("================================\n")
+            logging.exception("Gemini JSON parsing exception")
 
             return {
                 "success": False,
-                "error": "AI response could not be parsed."
+                "error": str(error)
             }
