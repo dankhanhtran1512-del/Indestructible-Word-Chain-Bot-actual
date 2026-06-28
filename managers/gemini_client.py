@@ -1,4 +1,5 @@
 import json
+import re
 
 from google import genai
 from config import GEMINI_API_KEY
@@ -15,9 +16,18 @@ class GeminiClient:
                 contents=prompt
             )
 
-            return self.parse_json_response(response.text)
+            text = getattr(response, "text", None)
+
+            if not text:
+                return {
+                    "success": False,
+                    "error": "AI returned an empty response."
+                }
+
+            return self.parse_json_response(text)
 
         except Exception as error:
+            print("Gemini error:", error)
             return {
                 "success": False,
                 "error": str(error)
@@ -26,9 +36,21 @@ class GeminiClient:
     def parse_json_response(self, text):
         try:
             text = text.strip()
+
             text = text.replace("```json", "").replace("```", "").strip()
 
-            result = json.loads(text)
+            try:
+                result = json.loads(text)
+            except json.JSONDecodeError:
+                match = re.search(r"\{.*\}", text, re.DOTALL)
+
+                if not match:
+                    return {
+                        "success": False,
+                        "error": f"AI response could not be parsed. Raw response: {text[:500]}"
+                    }
+
+                result = json.loads(match.group(0))
 
             if isinstance(result, dict):
                 result["success"] = True
@@ -39,8 +61,8 @@ class GeminiClient:
                 "error": "AI response was not a JSON object."
             }
 
-        except Exception:
+        except Exception as error:
             return {
                 "success": False,
-                "error": "AI response could not be parsed."
+                "error": f"AI response could not be parsed: {error}"
             }
