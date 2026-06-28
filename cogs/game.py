@@ -112,7 +112,7 @@ class Game(commands.Cog):
         if lang == "vietnamese":
             reasons = {
                 "same_player": "Ai cho mà tự chơi mình vậy, rủ bạn chơi cùng đê.",
-                "already_used": "Từ này đã nãy dùng rồi.",
+                "already_used": "Từ này nãy dùng rồi.",
                 "game_not_running": "Trò chơi đã kết thúc.",
                 "wrong_start": f"Từ phải bắt đầu bằng: {required}",
                 "dictionary_invalid": "Từ này không có trong từ điển, nếu nó có nghĩa thật hãy liên hệ cho chủ bot để chỉnh sửa.",
@@ -573,9 +573,67 @@ class Game(commands.Cog):
                 ephemeral=True
             )
 
+
+    @app_commands.command(name="rejectphrase", description="Reject a Vietnamese phrase so it can no longer be used.")
+    @app_commands.describe(phrase="The Vietnamese phrase to reject.")
+    async def rejectphrase(self, interaction: discord.Interaction, phrase: str):
+        lang = self.lang(interaction.guild.id)
+        channel_id = interaction.channel.id
+        game = game_manager.get_game(channel_id)
+
+        phrase = phrase.lower().strip()
+
+        if len(phrase.split()) != 2:
+            await interaction.response.send_message(
+                "❌ Phrase must be exactly 2 words.",
+                ephemeral=True
+            )
+            return
+
+        if game is not None and game.language != "vietnamese":
+            await interaction.response.send_message(
+                "❌ This command is only for Vietnamese phrases.",
+                ephemeral=True
+            )
+            return
+
+        self.vietnamese_ai.reject_phrase(
+            game=game,
+            phrase=phrase,
+            rejected_by_id=interaction.user.id,
+            rejected_by_name=interaction.user.display_name
+        )
+
+        if lang == "vietnamese":
+            text = (
+                f"⚠️ **Cụm từ đã bị người chơi từ chối.**\n\n"
+                f"❌ **{phrase}** đã được thêm vào danh sách cụm bị cấm.\n"
+                f"Cụm này sẽ không thể dùng lại trong các ván sau.\n\n"
+                f"💰 Người đã được cộng điểm trước đó vẫn được giữ điểm."
+            )
+        elif lang == "french":
+            text = (
+                f"⚠️ **Phrase rejected by another player.**\n\n"
+                f"❌ **{phrase}** has been added to the rejected phrase list.\n"
+                f"It can no longer be used in future games.\n\n"
+                f"💰 Any points already granted will remain."
+            )
+        else:
+            text = (
+                f"⚠️ **Phrase rejected by another player.**\n\n"
+                f"❌ **{phrase}** has been added to the rejected phrase list.\n"
+                f"It can no longer be used in future games.\n\n"
+                f"💰 Any points already granted will remain."
+            )
+
+        await interaction.response.send_message(text)
+
     @commands.Cog.listener()
     async def on_message(self, message):
+            
         if message.author.bot:
+            return
+        if message.stickers:
             return
 
         channel_id = message.channel.id
