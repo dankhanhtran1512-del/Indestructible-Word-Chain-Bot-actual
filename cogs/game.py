@@ -357,6 +357,24 @@ class Game(commands.Cog):
             f"Final streak: **{streak}**"
         )
 
+    def is_dead_end(self, game):
+        if not game.required_text:
+            return False
+
+        if game.language == "vietnamese":
+            return self.vietnamese_ai.check_dead_end(game)
+
+        required_text = game.required_text.lower().strip()
+
+        for language in game.languages:
+            candidates = self.validator.indexes.get(language, {}).get(required_text, [])
+
+            for candidate in candidates:
+                if candidate not in game.used_words:
+                    return False
+
+        return True
+
     @tasks.loop(minutes=1)
     async def daily_announcement(self):
         from datetime import datetime
@@ -511,12 +529,16 @@ class Game(commands.Cog):
                     break
 
         if hint_word is None:
+            game.running = False
+
             if lang == "vietnamese":
                 text = "❌ Không tìm thấy gợi ý hợp lệ."
             elif lang == "french":
                 text = "❌ Aucun indice valide inutilisé n’a été trouvé."
             else:
                 text = "❌ No valid hint could be found."
+
+            text += self.format_dead_end(lang, game.chain_streak)
 
             await interaction.followup.send(text, ephemeral=True)
             return
@@ -560,6 +582,9 @@ class Game(commands.Cog):
         game = game_manager.get_game(channel_id)
 
         if game is None:
+            return
+
+        if not getattr(game, "running", True):
             return
 
         lang = self.lang(message.guild.id)
@@ -670,10 +695,9 @@ class Game(commands.Cog):
                 is_vietnamese=(game.language == "vietnamese")
             )
 
-            if game.language == "vietnamese":
-                if self.vietnamese_ai.check_dead_end(game):
-                    game.running = False
-                    response += self.format_dead_end(lang, result["chain_streak"])
+            if self.is_dead_end(game):
+                game.running = False
+                response += self.format_dead_end(lang, result["chain_streak"])
 
             await message.channel.send(response)
 
