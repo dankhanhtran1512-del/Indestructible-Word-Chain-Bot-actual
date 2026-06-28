@@ -241,7 +241,10 @@ class VietnameseAI:
         rejected_result = self.cache_manager.get_rejected(phrase)
 
         if rejected_result is not None:
-            return rejected_result
+            reason = rejected_result.get("reason", "").lower()
+
+            if "ai is unavailable" not in reason:
+                return rejected_result
 
         if phrase in self.local_phrases:
             self.cache_manager.approve(
