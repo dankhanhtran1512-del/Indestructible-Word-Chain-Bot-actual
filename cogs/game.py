@@ -247,15 +247,11 @@ class Game(commands.Cog):
         )
 
     def format_accepted(self, lang, word, score, streak, required, milestone, is_vietnamese):
-        next_text = required if is_vietnamese else required.upper()
-
         if lang == "vietnamese":
             response = (
                 f"✅ Đã chấp nhận: **{word}**!\n"
-                f"➕ **+5 điểm**\n"
                 f"💰 Điểm: **{score}**\n"
-                f"🔥 Chuỗi hiện tại: **{streak}**\n"
-                f"➡️ Từ tiếp theo phải bắt đầu bằng: **{next_text}**"
+                f"🔥 Chuỗi hiện tại: **{streak}**"
             )
 
             if milestone:
@@ -269,10 +265,8 @@ class Game(commands.Cog):
         if lang == "french":
             response = (
                 f"✅ **{word}** accepté !\n"
-                f"➕ **+5 points**\n"
                 f"💰 Score : **{score}**\n"
-                f"🔥 Série actuelle : **{streak}**\n"
-                f"➡️ Le prochain mot doit commencer par : **{next_text}**"
+                f"🔥 Série actuelle : **{streak}**"
             )
 
             if milestone:
@@ -285,10 +279,8 @@ class Game(commands.Cog):
 
         response = (
             f"✅ **{word}** accepted!\n"
-            f"➕ **+5 points**\n"
             f"💰 Score: **{score}**\n"
-            f"🔥 Chain streak: **{streak}**\n"
-            f"➡️ Next must start with: **{next_text}**"
+            f"🔥 Chain streak: **{streak}**"
         )
 
         if milestone:
@@ -304,29 +296,23 @@ class Game(commands.Cog):
             return (
                 f"❌ **{word}** không được chấp nhận.\n"
                 f"Lý do: {reason}\n"
-                f"➖ **-3 điểm**\n"
                 f"💰 Điểm: **{score}**\n"
                 f"📖 Cụm cuối đã chấp nhận: **{last_word}**\n"
-                f"➡️ Cần bắt đầu bằng: **{required}**\n"
                 f"🔥 Chuỗi hiện tại: **{streak}**"
             )
         if lang == "french":
             return (
                 f"❌ **{word}** n’est pas accepté.\n"
                 f"Raison : {reason}\n"
-                f"➖ **-3 points**\n"
                 f"💰 Score : **{score}**\n"
                 f"📖 Dernier mot accepté : **{last_word}**\n"
-                f"➡️ Il faut commencer par : **{required}**\n"
                 f"🔥 Série actuelle : **{streak}**"
             )
         return (
             f"❌ **{word}** is not allowed.\n"
             f"Reason: {reason}\n"
-            f"➖ **-3 points**\n"
             f"💰 Score: **{score}**\n"
             f"📖 Last accepted phrase: **{last_word}**\n"
-            f"➡️ Need: **{required}**\n"
             f"🔥 Chain streak: **{streak}**"
         )
 
@@ -334,27 +320,21 @@ class Game(commands.Cog):
         if lang == "vietnamese":
             return (
                 f"❌ **{word}** đã được dùng rồi.\n"
-                f"➖ **-3 điểm**\n"
                 f"💰 Điểm: **{score}**\n"
                 f"📖 Cụm cuối đã chấp nhận: **{last_word}**\n"
-                f"➡️ Cần bắt đầu bằng: **{required}**\n"
                 f"🔥 Chuỗi hiện tại: **{streak}**"
             )
         if lang == "french":
             return (
                 f"❌ **{word}** a déjà été utilisé.\n"
-                f"➖ **-3 points**\n"
                 f"💰 Score : **{score}**\n"
                 f"📖 Dernier mot accepté : **{last_word}**\n"
-                f"➡️ Il faut commencer par : **{required}**\n"
                 f"🔥 Série actuelle : **{streak}**"
             )
         return (
             f"❌ **{word}** has already been used.\n"
-            f"➖ **-3 points**\n"
             f"💰 Score: **{score}**\n"
             f"📖 Last accepted phrase: **{last_word}**\n"
-            f"➡️ Need: **{required}**\n"
             f"🔥 Chain streak: **{streak}**"
         )
 
@@ -566,9 +546,9 @@ class Game(commands.Cog):
             )
         else:
             await interaction.followup.send(
-        self.format_hint_result(lang, hint_word, new_score),
-        view=view,
-        ephemeral=True
+                self.format_hint_result(lang, hint_word, new_score),
+                view=view,
+                ephemeral=True
             )
 
     @commands.Cog.listener()
@@ -584,6 +564,18 @@ class Game(commands.Cog):
 
         lang = self.lang(message.guild.id)
         word = message.content.lower().strip()
+
+        if not word:
+            return
+
+        word_parts = word.split()
+
+        if game.language == "vietnamese":
+            if len(word_parts) != 2:
+                return
+        else:
+            if len(word_parts) != 1:
+                return
 
         if game.language == "vietnamese":
             if word in game.used_words:
