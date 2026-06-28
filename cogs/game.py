@@ -112,7 +112,7 @@ class Game(commands.Cog):
         if lang == "vietnamese":
             reasons = {
                 "same_player": "Ai cho mà tự chơi mình vậy, rủ bạn chơi cùng đê.",
-                "already_used": "Từ này nãy dùng rồi.",
+                "already_used": "Từ này đã nãy dùng rồi.",
                 "game_not_running": "Trò chơi đã kết thúc.",
                 "wrong_start": f"Từ phải bắt đầu bằng: {required}",
                 "dictionary_invalid": "Từ này không có trong từ điển, nếu nó có nghĩa thật hãy liên hệ cho chủ bot để chỉnh sửa.",
@@ -576,8 +576,6 @@ class Game(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.author.bot:
-            return
-        if message.stickers:
             return
 
         channel_id = message.channel.id

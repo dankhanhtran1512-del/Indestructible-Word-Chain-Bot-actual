@@ -71,6 +71,8 @@ class VietnameseAI:
         local_continuations = [
             phrase for phrase in self.local_phrases
             if phrase.startswith(required_word + " ")
+            and phrase not in used_phrases
+            and not self.cache_manager.is_rejected(phrase)
         ]
 
         if local_continuations:
@@ -88,15 +90,22 @@ class VietnameseAI:
         cached = self.vietnamese_cache.get_continuations(required_word)
 
         if cached:
-            for phrase in cached:
-                self.phrase_graph.add_phrase(
-                    phrase,
-                    source="continuation_cache",
-                    confidence=0.8
-                )
+            cached = [
+                phrase for phrase in cached
+                if phrase not in used_phrases
+                and not self.cache_manager.is_rejected(phrase)
+            ]
 
-            self.last_continuation_status = "cache_found"
-            return cached
+            if cached:
+                for phrase in cached:
+                    self.phrase_graph.add_phrase(
+                        phrase,
+                        source="continuation_cache",
+                        confidence=0.8
+                    )
+
+                self.last_continuation_status = "cache_found"
+                return cached
 
         prompt = PromptBuilder.build_continuation_prompt(
             required_word=required_word,
@@ -201,20 +210,41 @@ class VietnameseAI:
         return None
 
     def reject_hint(self, game, phrase):
+        self.reject_phrase(
+            game=game,
+            phrase=phrase,
+            rejected_by_id=None,
+            rejected_by_name=None
+        )
+
+    def reject_phrase(self, game, phrase, rejected_by_id=None, rejected_by_name=None):
         phrase = phrase.lower().strip()
+
+        reason = "Rejected by player because the phrase does not have a real Vietnamese meaning."
+        source = "player_rejected_phrase"
+
+        if rejected_by_name:
+            reason = f"Rejected by player {rejected_by_name} because the phrase does not have a real Vietnamese meaning."
 
         self.cache_manager.reject(
             phrase,
-            reason="Rejected by player because the hint did not make sense.",
-            source="player_rejected_hint",
+            reason=reason,
+            source=source,
             confidence=1.0
         )
 
         self.phrase_graph.mark_rejected(phrase)
         self.phrase_graph.remove_phrase(phrase)
 
-        if game.required_text:
+        self.local_phrases.discard(phrase)
+
+        if game is not None and getattr(game, "required_text", None):
             self.vietnamese_cache.remove_continuation(game.required_text, phrase)
+
+        first_word = phrase.split()[0] if phrase.split() else None
+
+        if first_word:
+            self.vietnamese_cache.remove_continuation(first_word, phrase)
 
     def validate_move(self, game, phrase):
         phrase = phrase.lower().strip()
@@ -227,6 +257,14 @@ class VietnameseAI:
         if not local_result["valid"]:
             return local_result
 
+        rejected_result = self.cache_manager.get_rejected(phrase)
+
+        if rejected_result is not None:
+            reason = rejected_result.get("reason", "").lower()
+
+            if "ai is unavailable" not in reason:
+                return rejected_result
+
         approved_result = self.cache_manager.get_approved(phrase)
 
         if approved_result is not None:
@@ -237,14 +275,6 @@ class VietnameseAI:
             )
 
             return approved_result
-
-        rejected_result = self.cache_manager.get_rejected(phrase)
-
-        if rejected_result is not None:
-            reason = rejected_result.get("reason", "").lower()
-
-            if "ai is unavailable" not in reason:
-                return rejected_result
 
         if phrase in self.local_phrases:
             self.cache_manager.approve(
