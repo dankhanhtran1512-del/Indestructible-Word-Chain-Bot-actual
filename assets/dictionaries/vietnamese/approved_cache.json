@@ -1,0 +1,429 @@
+{
+  "mũi heo": {
+    "valid": true,
+    "reason": "Test approved phrase.",
+    "source": "manual",
+    "confidence": 1.0,
+    "checked_at": "2026-06-27T15:21:12"
+  },
+  "con heo": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase, commonly understood, and suitable for the game.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-27T15:48:27"
+  },
+  "heo nái": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Heo nái' means 'sow' (female pig for breeding) and is a very common and understandable term.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-27T15:48:33"
+  },
+  "nái xề": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Nái xề' refers to a heavily pregnant or very fat sow, a commonly understood term.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-27T15:48:48"
+  },
+  "xề xòa": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Xề xòa' is a common adjective/adverb meaning easygoing, informal, or somewhat sloppy/casual, and is widely understood.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-27T15:49:02"
+  },
+  "heo nhỏ": {
+    "valid": true,
+    "reason": "Natural and commonly understandable Vietnamese two-word phrase meaning 'small pig' or 'piglet'.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-27T16:06:55"
+  },
+  "nhỏ nhắn": {
+    "valid": true,
+    "reason": "This is a very common and natural Vietnamese two-word adjective phrase meaning 'small and pretty' or 'petite'. It is widely understood and perfectly suitable for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-27T16:07:01"
+  },
+  "nhắn gửi": {
+    "valid": true,
+    "reason": "This is a very common, natural, and understandable two-word phrase in Vietnamese, meaning 'to send a message' or 'to convey'. It perfectly fits all criteria for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-27T16:07:16"
+  },
+  "gửi gắm": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase meaning 'to entrust' or 'to confide'. It is commonly understood and suitable for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-27T16:15:32"
+  },
+  "gắm giữ": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Gắm giữ' is a common compound verb meaning to hold onto dearly, to cherish, or to preserve carefully.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-27T16:16:15"
+  },
+  "giữ đồ": {
+    "valid": true,
+    "reason": "Natural and very common Vietnamese phrase meaning 'to look after things' or 'to keep belongings'.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-27T16:38:27"
+  },
+  "đồ lụa": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase, commonly understood to mean 'silk clothes' or 'items made of silk'.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-27T16:38:36"
+  },
+  "kính gửi": {
+    "valid": true,
+    "reason": "This is a very common and natural two-word phrase used at the beginning of formal letters or emails, meaning 'Dear' or 'Respectfully sent to'. It is widely understood and suitable for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-27T16:39:06"
+  },
+  "heo rừng": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Heo rừng' (wild boar) is a very common and widely understood two-word phrase.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-27T17:55:27"
+  },
+  "rừng rú": {
+    "valid": true,
+    "reason": "Rừng rú is a very common and natural two-word phrase in Vietnamese, referring to wild, remote, or primitive areas, often used to describe something uncivilized. It is widely understood and fits all the criteria for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-27T17:55:35"
+  },
+  "rú thét": {
+    "valid": true,
+    "reason": "The phrase 'rú thét' consists of two distinct Vietnamese words ('rú' - to howl, to roar; 'thét' - to scream, to shout). It is a very natural and commonly understood compound verb in Vietnamese, often used to describe a loud, fierce, or agonizing scream/roar/howl. It fits all criteria for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-27T17:56:48"
+  },
+  "thét lên": {
+    "valid": true,
+    "reason": "Thét lên is a very common and natural Vietnamese phrasal verb meaning 'to scream/shout out (loudly)'. It consists of exactly two standard Vietnamese words, is widely understood, not slang, an abbreviation, proper name, or offensive, and is not an invented phrase.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-27T17:59:40"
+  },
+  "chào hỏi": {
+    "valid": true,
+    "reason": "This is a very common and natural Vietnamese two-word phrase meaning 'to greet' or 'greeting'. It adheres to all specified rules.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T01:42:43"
+  },
+  "hỏi thăm": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase meaning 'to ask about/inquire after someone's well-being'. It is a very common and widely understood two-word expression.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T01:43:00"
+  },
+  "thăm dò": {
+    "valid": true,
+    "reason": "Thăm dò is a very common and natural Vietnamese two-word phrase meaning 'to explore,' 'to investigate,' or 'to sound out.' It adheres to all specified rules, being commonly understood, standard vocabulary, and not slang, an abbreviation, or a proper name.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T01:46:40"
+  },
+  "dò đường": {
+    "valid": true,
+    "reason": "This is a very common, natural, and standard Vietnamese two-word phrase meaning 'to find one's way' or 'to scout a path'. It meets all criteria for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T01:52:58"
+  },
+  "đường đi": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Đường đi' is a common and widely understood phrase meaning 'the way/path/route' or 'the direction/journey'.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T01:53:33"
+  },
+  "đi bộ": {
+    "valid": true,
+    "reason": "The phrase 'đi bộ' is a very common, natural, and standard Vietnamese two-word phrase meaning 'to walk'. It meets all specified criteria for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.99,
+    "checked_at": "2026-06-28T01:53:54"
+  },
+  "bộ hành": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:04:28"
+  },
+  "hành quyết": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:04:33"
+  },
+  "quyết đoán": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:05:01"
+  },
+  "đoán ý": {
+    "valid": true,
+    "reason": "The phrase 'đoán ý' is a natural and commonly understood two-word Vietnamese phrase meaning 'to guess someone's intention/thought/idea'. It adheres to all specified rules.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:05:07"
+  },
+  "ý tưởng": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:05:11"
+  },
+  "tưởng tượng": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:05:23"
+  },
+  "tượng đá": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Tượng đá' means 'stone statue' or 'statue made of stone'. It is a common and widely understood two-word noun phrase.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:05:55"
+  },
+  "đá banh": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Đá banh' is a very common and standard two-word phrase meaning 'to play soccer/football' or literally 'kick the ball'.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:06:06"
+  },
+  "banh càng": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Banh càng' means to splay one's legs wide apart, often used descriptively for a posture or an action. It is commonly understood and not offensive, slang, or an abbreviation.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:06:26"
+  },
+  "càng quấy": {
+    "valid": true,
+    "reason": "The phrase \"càng quấy\" is a natural and commonly understood two-word Vietnamese phrase meaning 'to make trouble' or 'to cause disturbance'. It adheres to all specified rules.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:06:39"
+  },
+  "quấy rối": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:06:43"
+  },
+  "rối rắm": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:06:47"
+  },
+  "heo con": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Heo con' literally translates to 'baby pig' or 'piglet' and is a widely recognized and used term.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:17:04"
+  },
+  "con bò": {
+    "valid": true,
+    "reason": "This is a very common, natural, and widely understood two-word phrase in Vietnamese meaning 'cow' or 'ox'. It adheres to all specified rules for a 'nối chữ' game.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:17:16"
+  },
+  "bò chiên": {
+    "valid": true,
+    "reason": "This is a very common and natural Vietnamese two-word phrase meaning 'fried beef'. It is widely understood and frequently used, especially in culinary contexts. It meets all the specified criteria.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:17:26"
+  },
+  "chiên cơm": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Chiên cơm' means 'to fry rice' or 'fry rice' (the act of cooking). It is a very common culinary term and action, forming a natural verb-object construction. While the dish is more commonly called 'cơm chiên' (fried rice), 'chiên cơm' as the action is perfectly natural and understood.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:17:35"
+  },
+  "cơm nắm": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:17:39"
+  },
+  "nắm tay": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:17:44"
+  },
+  "tay chân": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:17:48"
+  },
+  "chân người": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Chân người' directly translates to 'human leg/foot' and is a commonly understood and natural compound noun in Vietnamese, often used in descriptions or anatomical contexts.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:18:03"
+  },
+  "người ngợm": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:18:11"
+  },
+  "con ngươi": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:22:34"
+  },
+  "ngươi ấy": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. While 'ngươi' is less common in modern colloquial speech (often being replaced by 'người' or other pronouns like 'anh ấy,' 'cô ấy') and carries a specific nuance (archaic, literary, or implying a lower status for the addressed person), the phrase 'ngươi ấy' is grammatically correct and understandable, existing in Vietnamese, particularly in literature or historical/mythological contexts. It is not slang, an abbreviation, a proper name, offensive, or an invented phrase.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:24:00"
+  },
+  "ấy ai": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:24:18"
+  },
+  "ai dà": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:24:28"
+  },
+  "chào nhe": {
+    "valid": true,
+    "reason": "This is a natural and commonly understood Vietnamese two-word phrase used as an informal farewell, similar to 'goodbye for now' or 'bye then'. 'Nhe' (often spelled 'nhé' or 'nha') is a common Vietnamese final particle used to soften the tone, confirm, or seek agreement, making the phrase natural and widely used.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:26:56"
+  },
+  "nhe răng": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:27:00"
+  },
+  "răng sâu": {
+    "valid": true,
+    "reason": "This is a very common and natural Vietnamese two-word phrase meaning 'decayed tooth' or 'cavity'. It is widely understood and fits all the criteria.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:27:09"
+  },
+  "sâu bướm": {
+    "valid": true,
+    "reason": "Natural Vietnamese phrase. 'Sâu bướm' is the standard and commonly understood term for 'caterpillar' in Vietnamese. It consists of two distinct words, is not slang, an abbreviation, a proper name, or offensive, and is a widely recognized phrase.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:28:45"
+  },
+  "con mèo": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:45:54"
+  },
+  "mèo nhỏ": {
+    "valid": true,
+    "reason": "This is a natural and commonly understood Vietnamese two-word phrase meaning 'small cat'. It follows the 'noun + adjective' structure common in Vietnamese and is not slang, an abbreviation, or an invented term.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:46:02"
+  },
+  "nhỏ nhoi": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:46:15"
+  },
+  "chó nhỏ": {
+    "valid": true,
+    "reason": "This is a natural and commonly understood Vietnamese phrase meaning 'small dog' or 'puppy'. It consists of exactly two words, is not slang, an abbreviation, a proper name, offensive, or an invented phrase, making it suitable for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T02:55:35"
+  },
+  "con chim": {
+    "valid": true,
+    "reason": "This is a very common and natural two-word phrase in Vietnamese, meaning 'a bird' or 'the bird'. 'Con' is a classifier often used for animals, and 'chim' means 'bird'. It fits all the criteria perfectly.",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T06:42:51"
+  },
+  "chim chóc": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T06:42:56"
+  },
+  "nói đi": {
+    "valid": true,
+    "reason": "This is a very common and natural Vietnamese two-word phrase. 'Nói' means 'to say/to speak,' and 'đi' is a particle used here to encourage or request an action, making the phrase mean 'Say it' or 'Go on, tell me.'",
+    "source": "gemini",
+    "confidence": 0.98,
+    "checked_at": "2026-06-28T06:53:09"
+  },
+  "đi làm": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T06:53:15"
+  },
+  "răng rắc": {
+    "valid": true,
+    "reason": "Found in local Vietnamese phrase dictionary.",
+    "source": "local_phrases",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T07:33:47"
+  }
+}

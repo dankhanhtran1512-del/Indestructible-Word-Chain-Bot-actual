@@ -1,0 +1,100 @@
+{
+  "heo mũi": {
+    "valid": false,
+    "reason": "Test rejected phrase.",
+    "source": "manual",
+    "confidence": 1.0,
+    "checked_at": "2026-06-27T15:21:12"
+  },
+  "heo cún": {
+    "valid": false,
+    "reason": "While 'heo' (pig) and 'cún' (puppy) are natural Vietnamese words, their combination 'heo cún' is not a natural or commonly established two-word phrase in Vietnamese that refers to a single concept or is widely used as an idiom. It simply lists two distinct animals without forming a cohesive or recognized phrase suitable for a nối chữ game.",
+    "source": "gemini",
+    "confidence": 0.9,
+    "checked_at": "2026-06-27T16:06:35"
+  },
+  "gắm xương": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-27T16:48:30"
+  },
+  "rú hổ": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-27T17:56:29"
+  },
+  "rú chó": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-27T17:56:32"
+  },
+  "rú sói": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-27T17:56:34"
+  },
+  "rú báo": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-27T17:56:37"
+  },
+  "rú lợn": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-27T17:56:39"
+  },
+  "quyết đinh": {
+    "valid": false,
+    "reason": "The phrase 'quyết đinh' is not a natural or commonly understood Vietnamese two-word phrase. It is almost certainly a misspelling of 'quyết định' (to decide, decision), which is a very common and natural phrase. However, 'đinh' (nail, surname, etc.) when combined with 'quyết' (to decide, determined) does not form a meaningful or natural collocation in Vietnamese.",
+    "source": "gemini",
+    "confidence": 0.99,
+    "checked_at": "2026-06-28T02:04:45"
+  },
+  "tượng ăn": {
+    "valid": false,
+    "reason": "While 'tượng' (statue or sometimes elephant) and 'ăn' (to eat) are individual Vietnamese words, the phrase 'tượng ăn' is not a natural, commonly understood two-word phrase in Vietnamese. If 'tượng' refers to a statue, it makes no sense as statues do not eat. If 'tượng' refers to an elephant, while elephants do eat, the common phrase would be 'voi ăn' or 'con voi ăn'. 'Tượng ăn' by itself is not a standard or natural collocation and would likely cause confusion.",
+    "source": "gemini",
+    "confidence": 0.95,
+    "checked_at": "2026-06-28T02:05:49"
+  },
+  "rắm rít": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:07:02"
+  },
+  "ngươi ta": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:23:03"
+  },
+  "ngươi khác": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T02:23:09"
+  },
+  "răng bừa": {
+    "valid": false,
+    "reason": "Rejected by player because the hint did not make sense.",
+    "source": "player_rejected_hint",
+    "confidence": 1.0,
+    "checked_at": "2026-06-28T07:33:42"
+  }
+}

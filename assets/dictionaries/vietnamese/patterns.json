@@ -1,0 +1,38 @@
+{
+  "eat_food": {
+    "first_category": "eating_verbs",
+    "second_category": "foods"
+  },
+  "drink_drink": {
+    "first_category": "drinking_verbs",
+    "second_category": "drinks"
+  },
+  "body_part_animal": {
+    "first_category": "body_parts",
+    "second_category": "animals"
+  },
+  "animal_description": {
+    "first_category": "animals",
+    "second_category": "descriptions"
+  },
+  "food_cooking": {
+    "first_category": "foods",
+    "second_category": "cooking_methods"
+  },
+  "object_material": {
+    "first_category": "objects",
+    "second_category": "materials"
+  },
+  "place_object": {
+    "first_category": "places",
+    "second_category": "objects"
+  },
+  "person_description": {
+    "first_category": "people",
+    "second_category": "descriptions"
+  },
+  "color_object": {
+    "first_category": "colors",
+    "second_category": "objects"
+  }
+}
