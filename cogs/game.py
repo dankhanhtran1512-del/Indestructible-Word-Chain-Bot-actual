@@ -1,3 +1,5 @@
+import asyncio
+
 import discord
 from discord import app_commands
 from discord.ext import commands, tasks
@@ -103,10 +105,28 @@ class Game(commands.Cog):
         self.validator = WordValidator()
         self.validator.load_all()
         self.vietnamese_ai = VietnameseAI()
+        self.channel_locks = {}
+        self.ai_semaphore = asyncio.Semaphore(8)
         self.daily_announcement.start()
 
     def lang(self, guild_id):
         return get_bot_language(guild_id)
+
+    def get_channel_lock(self, channel_id):
+        if channel_id not in self.channel_locks:
+            self.channel_locks[channel_id] = asyncio.Lock()
+        return self.channel_locks[channel_id]
+
+    async def run_ai_task(self, func, *args):
+        async with self.ai_semaphore:
+            return await asyncio.to_thread(func, *args)
+
+    async def check_dead_end_later(self, channel, game, lang, streak):
+        is_dead = await self.run_ai_task(self.is_dead_end, game)
+
+        if is_dead and getattr(game, "running", True):
+            game.running = False
+            await channel.send(self.format_dead_end(lang, streak))
 
     def translate_reason(self, lang, reason, required=None):
         if lang == "vietnamese":
@@ -514,7 +534,7 @@ class Game(commands.Cog):
             return
 
         if game.language == "vietnamese":
-            hint_word = self.vietnamese_ai.get_hint(game)
+            hint_word = await self.run_ai_task(self.vietnamese_ai.get_hint, game)
         else:
             hint_word = None
 
@@ -628,11 +648,58 @@ class Game(commands.Cog):
 
         await interaction.response.send_message(text)
 
+    @app_commands.command(name="approvephrase", description="Approve a Vietnamese phrase so it can be accepted in future games.")
+    @app_commands.describe(phrase="The Vietnamese phrase to approve.")
+    async def approvephrase(self, interaction: discord.Interaction, phrase: str):
+        lang = self.lang(interaction.guild.id)
+        channel_id = interaction.channel.id
+        game = game_manager.get_game(channel_id)
+
+        phrase = phrase.lower().strip()
+
+        if len(phrase.split()) != 2:
+            await interaction.response.send_message(
+                "❌ Phrase must be exactly 2 words.",
+                ephemeral=True
+            )
+            return
+
+        self.vietnamese_ai.approve_phrase(
+            game=game,
+            phrase=phrase,
+            approved_by_id=interaction.user.id,
+            approved_by_name=interaction.user.display_name
+        )
+
+        if lang == "vietnamese":
+            text = (
+                f"✅ **Cụm từ đã được duyệt lại.**\n\n"
+                f"🟢 **{phrase}** đã được xóa khỏi danh sách cụm bị cấm và thêm vào danh sách được chấp nhận.\n"
+                f"Cụm này có thể được dùng trong các ván sau.\n\n"
+                f"💰 Nếu trước đó có ai bị trừ điểm vì cụm này thì điểm vẫn giữ nguyên."
+            )
+        elif lang == "french":
+            text = (
+                f"✅ **Phrase approved.**\n\n"
+                f"🟢 **{phrase}** was removed from the rejected phrase list and added to the approved phrase list.\n"
+                f"It can be used in future games.\n\n"
+                f"💰 Any previous point deduction will remain unchanged."
+            )
+        else:
+            text = (
+                f"✅ **Phrase approved.**\n\n"
+                f"🟢 **{phrase}** was removed from the rejected phrase list and added to the approved phrase list.\n"
+                f"It can be used in future games.\n\n"
+                f"💰 Any previous point deduction will remain unchanged."
+            )
+
+        await interaction.response.send_message(text)
+
     @commands.Cog.listener()
     async def on_message(self, message):
-            
         if message.author.bot:
             return
+
         if message.stickers:
             return
 
@@ -660,106 +727,123 @@ class Game(commands.Cog):
             if len(word_parts) != 1:
                 return
 
-        if game.language == "vietnamese":
-            if word in game.used_words:
+        lock = self.get_channel_lock(channel_id)
+
+        async with lock:
+            game = game_manager.get_game(channel_id)
+
+            if game is None:
+                return
+
+            if not getattr(game, "running", True):
+                return
+
+            if game.language == "vietnamese":
+                if word in game.used_words:
+                    new_score = add_points(
+                        message.author.id,
+                        message.author.display_name,
+                        -3,
+                        "repeat"
+                    )
+
+                    await message.channel.send(
+                        self.format_repeat(
+                            lang,
+                            word,
+                            new_score,
+                            game.current_word,
+                            game.required_text,
+                            game.chain_streak
+                        )
+                    )
+                    return
+
+                ai_result = await self.run_ai_task(
+                    self.vietnamese_ai.process_move,
+                    game,
+                    word
+                )
+
+                if not ai_result["accepted"]:
+                    new_score = add_points(
+                        message.author.id,
+                        message.author.display_name,
+                        -3,
+                        "wrong"
+                    )
+
+                    await message.channel.send(
+                        self.format_rejected(
+                            lang,
+                            word,
+                            ai_result["reason"],
+                            new_score,
+                            game.current_word,
+                            game.required_text,
+                            game.chain_streak
+                        )
+                    )
+                    return
+
+            elif game.language in ["english", "french"]:
+                if not self.validator.is_valid(word, game.languages):
+                    new_score = add_points(
+                        message.author.id,
+                        message.author.display_name,
+                        -3,
+                        "wrong"
+                    )
+
+                    await message.channel.send(
+                        self.format_rejected(
+                            lang,
+                            word,
+                            self.translate_reason(lang, "dictionary_invalid", game.required_text),
+                            new_score,
+                            game.current_word,
+                            game.required_text,
+                            game.chain_streak
+                        )
+                    )
+                    return
+
+            result = game.play_word(
+                player_id=message.author.id,
+                player_name=message.author.display_name,
+                word=word
+            )
+
+            if result["accepted"]:
                 new_score = add_points(
                     message.author.id,
                     message.author.display_name,
-                    -3,
-                    "repeat"
+                    5,
+                    "correct"
                 )
 
-                await message.channel.send(
-                    self.format_repeat(
+                response = self.format_accepted(
+                    lang=lang,
+                    word=word,
+                    score=new_score,
+                    streak=result["chain_streak"],
+                    required=result["required_text"],
+                    milestone=result["milestone"],
+                    is_vietnamese=(game.language == "vietnamese")
+                )
+
+                await message.channel.send(response)
+
+                asyncio.create_task(
+                    self.check_dead_end_later(
+                        message.channel,
+                        game,
                         lang,
-                        word,
-                        new_score,
-                        game.current_word,
-                        game.required_text,
-                        game.chain_streak
+                        result["chain_streak"]
                     )
                 )
                 return
 
-            ai_result = self.vietnamese_ai.process_move(
-                game=game,
-                phrase=word
-            )
-
-            if not ai_result["accepted"]:
-                new_score = add_points(
-                    message.author.id,
-                    message.author.display_name,
-                    -3,
-                    "wrong"
-                )
-
-                await message.channel.send(
-                    self.format_rejected(
-                        lang,
-                        word,
-                        ai_result["reason"],
-                        new_score,
-                        game.current_word,
-                        game.required_text,
-                        game.chain_streak
-                    )
-                )
-                return
-
-        elif game.language in ["english", "french"]:
-            if not self.validator.is_valid(word, game.languages):
-                new_score = add_points(
-                    message.author.id,
-                    message.author.display_name,
-                    -3,
-                    "wrong"
-                )
-
-                await message.channel.send(
-                    self.format_rejected(
-                        lang,
-                        word,
-                        self.translate_reason(lang, "dictionary_invalid", game.required_text),
-                        new_score,
-                        game.current_word,
-                        game.required_text,
-                        game.chain_streak
-                    )
-                )
-                return
-
-        result = game.play_word(
-            player_id=message.author.id,
-            player_name=message.author.display_name,
-            word=word
-        )
-
-        if result["accepted"]:
-            new_score = add_points(
-                message.author.id,
-                message.author.display_name,
-                5,
-                "correct"
-            )
-
-            response = self.format_accepted(
-                lang=lang,
-                word=word,
-                score=new_score,
-                streak=result["chain_streak"],
-                required=result["required_text"],
-                milestone=result["milestone"],
-                is_vietnamese=(game.language == "vietnamese")
-            )
-
-            if self.is_dead_end(game):
-                game.running = False
-                response += self.format_dead_end(lang, result["chain_streak"])
-
-            await message.channel.send(response)
-
-        else:
             event_type = "repeat" if result["reason"] == "already_used" else "wrong"
 
             new_score = add_points(
@@ -784,7 +868,6 @@ class Game(commands.Cog):
                     result["chain_streak"]
                 )
             )
-
 
 async def setup(bot):
     await bot.add_cog(Game(bot))
