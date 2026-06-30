@@ -56,7 +56,10 @@ class HintRejectView(discord.ui.View):
             phrase=self.current_hint
         )
 
-        new_hint = self.cog.vietnamese_ai.get_hint(self.game)
+        new_hint = await self.cog.run_ai_task(
+            self.cog.vietnamese_ai.get_hint,
+            self.game
+        )
 
         if new_hint is None:
             if lang == "vietnamese":
@@ -617,11 +620,14 @@ class Game(commands.Cog):
             )
             return
 
-        self.vietnamese_ai.reject_phrase(
-            game=game,
-            phrase=phrase,
-            rejected_by_id=interaction.user.id,
-            rejected_by_name=interaction.user.display_name
+        await interaction.response.defer()
+
+        await self.run_ai_task(
+            self.vietnamese_ai.reject_phrase,
+            game,
+            phrase,
+            interaction.user.id,
+            interaction.user.display_name
         )
 
         if lang == "vietnamese":
@@ -646,7 +652,7 @@ class Game(commands.Cog):
                 f"💰 Any points already granted will remain."
             )
 
-        await interaction.response.send_message(text)
+        await interaction.followup.send(text)
 
     @app_commands.command(name="approvephrase", description="Approve a Vietnamese phrase so it can be accepted in future games.")
     @app_commands.describe(phrase="The Vietnamese phrase to approve.")
@@ -664,11 +670,14 @@ class Game(commands.Cog):
             )
             return
 
-        self.vietnamese_ai.approve_phrase(
-            game=game,
-            phrase=phrase,
-            approved_by_id=interaction.user.id,
-            approved_by_name=interaction.user.display_name
+        await interaction.response.defer()
+
+        await self.run_ai_task(
+            self.vietnamese_ai.approve_phrase,
+            game,
+            phrase,
+            interaction.user.id,
+            interaction.user.display_name
         )
 
         if lang == "vietnamese":
@@ -693,7 +702,7 @@ class Game(commands.Cog):
                 f"💰 Any previous point deduction will remain unchanged."
             )
 
-        await interaction.response.send_message(text)
+        await interaction.followup.send(text)
 
     @commands.Cog.listener()
     async def on_message(self, message):
