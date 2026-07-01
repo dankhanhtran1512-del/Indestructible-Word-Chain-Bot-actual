@@ -398,14 +398,14 @@ class Game(commands.Cog):
 
         return True
 
-    @tasks.loop(seconds=10)
+    @tasks.loop(minutes=1)
     async def daily_announcement(self):
         from datetime import datetime
         from zoneinfo import ZoneInfo
 
         now = datetime.now(ZoneInfo("Asia/Ho_Chi_Minh"))
 
-        if True:
+        if now.hour == 0 and now.minute == 0:
             top_players = get_leaderboard(1)
 
             if not top_players:
