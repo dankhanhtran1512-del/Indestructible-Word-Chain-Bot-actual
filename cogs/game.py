@@ -1,6 +1,6 @@
 import asyncio
-
 import discord
+from pathlib import Path
 from discord import app_commands
 from discord.ext import commands, tasks
 
@@ -412,20 +412,29 @@ class Game(commands.Cog):
                 return
 
             name, score = top_players[0]
+            image_path = Path("assets/images/memeem.jpeg")
 
             for channel_id in game_manager.active_channel_ids():
                 channel = self.bot.get_channel(channel_id)
 
-                if channel:
-                    lang = self.lang(channel.guild.id)
+                if channel is None:
+                    continue
 
-                    if lang == "vietnamese":
-                        text = f"🏆 **Người đỉnh nhất hôm nay**\n🥇 {name} với **{score}** điểm!"
-                    elif lang == "french":
-                        text = f"🏆 **Gagnant du jour**\n🥇 {name} avec **{score}** points !"
-                    else:
-                        text = f"🏆 **Daily Winner**\n🥇 {name} with **{score}** points!"
+                lang = self.lang(channel.guild.id)
 
+                if lang == "vietnamese":
+                    text = f"🏆 **Người đỉnh nhất hôm nay**\n🥇 {name} với **{score}** điểm!"
+                elif lang == "french":
+                    text = f"🏆 **Gagnant du jour**\n🥇 {name} avec **{score}** points !"
+                else:
+                    text = f"🏆 **Daily Winner**\n🥇 {name} with **{score}** points!"
+
+                if image_path.exists():
+                    await channel.send(
+                        content=text,
+                        file=discord.File(image_path, filename="memeem.jpeg")
+                    )
+                else:
                     await channel.send(text)
 
     @daily_announcement.before_loop
